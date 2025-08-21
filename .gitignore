@@ -1,0 +1,30 @@
+# Ignore entire virtual environments
+.venv/
+car/bin/
+car/lib/
+car/include/
+car/pyvenv.cfg
+
+# Optional: If using Windows
+car/Scripts/
+car/Lib/
+car/Include/
+car/pyvenv.cfg
+
+# Don't ignore other car files!
+!car/
+!car/*.py
+!car/**/__init__.py
+
+# Ignore PyLint or other linting config/logs
+.pylint
+.pylint/
+.pylintrc
+
+# (Optional) Ignore other common Python-related files
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+.env
+.DS_Store
