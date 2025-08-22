@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Adventures of Sherlock Holmes</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/pure-min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/book_viewer.css') }}">
+</head>
+
+<body>
+
+  <div id="layout">
+      <a href="#menu" id="menuLink" class="menu-link">
+          <span></span>
+      </a>
+
+      <div id="menu">
+          <div class="pure-menu">
+              <a class="pure-menu-heading" href="/">Table of Contents</a>
+              <ul class="pure-menu-list">
+                {% for chapter in contents %}
+                <li class="pure-menu-item">
+                    <a href="#" class="pure-menu
+                Adding a Chapter Page
+Let's add a chapter page. We'll start with a page that displays the first chapter of the book, and in the next assignment, we'll come back and add support for the rest of the pages.
+
+When a user visits /chapters/1, they should see the contents of the first chapter of the book like this:
+
+Firefox showing chapter 1
+
+Add a new route to the application. Inside it, load the text from book_viewer/data/chp1.txt into a variable.
+
+Hide Solution
+app.pyCopy Code
+@app.route("/chapters/1")
+def chapter1():
+    chapter_title = "Chapter 1"
+    with open("book_viewer/data/toc.txt", "r") as file:
+        contents = file.readlines()
+    with open("book_viewer/data/chp1.txt", "r") as file:
+        chapter = file.read()
+
+    return render_template('chapter.html',
+                           chapter_title=chapter_title,
+                           contents=contents,
+                           chapter=chapter)
+Copy templates/index.html to templates/chapter.html. Update templates/chapter.html to display the contents of the chapter instead of the list of chapters within <div id="main">.
+
+Hide Solution
+templates/chapter.htmlCopy Code
+<div class="content">
+  <h2 class="content-subhead">{{ chapter_title }}</h2>
+  {{ chapter }}
+</div>
+Visit http://localhost:5003/chapters/1 in your browser and make sure it looks like the image above. Use port 8080 on Cloud9.
+
+Bonus: The chapter text is not very legible right now. We'll come back to this in a future assignment, but can you think of a way to improve its display?
+          </h2> 
+          {{ chapter }}
+        </div>
+      </div>
+  </div>
+<script type="text/javascript" src="{{ url_for('static', filename='javascripts/ui.js') }}"></script>
+</body>
+</html>
