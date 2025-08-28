@@ -28,3 +28,19 @@ __pycache__/
 *.sqlite3
 .env
 .DS_Store
+
+# Editor settings
+.vscode/
+
+# Linters and tooling
+.pylintrc
+.sylelint                  # in case you literally have this filename
+.stylelintrc
+.stylelintrc.json
+.stylelintrc.yaml
+.stylelintrc.yml
+.stylelintcache
+
+# Ignore all HTML files (be sure you really want this)
+*.html
+
