@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if not query %}
+  <h2 class="content-subhead">Search</h2>
+
+  <form action="{{ url_for('search') }}" method="get">
+    <input name="query" value="{{ query }}" />
+    <button type="submit">Search</button>
+  </form>
+{% elif results %}
+  <h2 class="content-subhead">Search</h2>
+
+  <form action="{{ url_for('search') }}" method="get">
+    <input name="query" value="{{ query }}" />
+    <button type="submit">Search</button>
+  </form>
+  <h2 class="content-subhead">Results for '{{ query }}'</h2>
+  <ul>
+    {% for result in results %}
+    <li>
+        <h4>{{ result.title }}</h4>
+        <ul>
+            {% for index, text in result.paragraphs.items() %}
+            <li class="pure-menu-list">
+                <a href="{{ url_for("chapter", page_num=result.num) }}#paragraph{{ index }}">
+                    {{ text | highlight_query(query) |safe }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h2 class="content-subhead">Search</h2>
+
+  <form action="{{ url_for('search') }}" method="get">
+    <input name="query" value="{{ query }}" />
+    <button type="submit">Search</button>
+  </form>
+  <br>
+  <p class="pure-menu-item">Sorry, no matches were found.</p>
+{% endif %}
+{% endblock %}
