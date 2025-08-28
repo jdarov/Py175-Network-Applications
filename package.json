@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "lint:css": "stylelint \"**/*.{css,scss,html}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,scss,html}\" --fix",
+    "lint:html": "htmlhint \"**/*.{html,htm}\""
+  }
+}
