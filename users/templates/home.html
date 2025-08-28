@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block name %}
+<div class="header">
+    <h1>USERS</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2 class="content-subhead">Users</h2>
+
+<div class="pure-menu">
+    <ul class="pure-menu-list">
+        {% for user in users %}
+        <li class="pure-menu-item">
+            <a href="{{ url_for("user", user_name=user)}}" class="pure-menu-link">{{ user | capitalize }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

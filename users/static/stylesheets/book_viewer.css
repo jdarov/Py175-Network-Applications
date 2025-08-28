@@ -1,0 +1,239 @@
+/* Base layout reset for sticky footer */
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Vollkorn', serif;
+  color: #777;
+}
+
+/* Make the main app wrapper fill available height so footer can push down */
+#layout {
+  position: relative;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto; /* grow to fill, allow footer to sit at bottom */
+}
+
+/* Footer styles, sticks to bottom when content is short */
+.site-footer {
+  margin-top: auto;              /* key line for sticky behavior */
+  border-top: 1px solid #eee;
+  background: #fafafa;
+  padding: 0.75rem 1rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsive images */
+.pure-img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Transitions for layout and menu */
+#layout,
+#menu,
+.menu-link {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+/* Active state pushes content when the menu is opened on small screens */
+#layout.active #menu {
+  left: 320px;
+  width: 320px;
+}
+
+#layout.active .menu-link {
+  left: 320px;
+}
+
+/* Content area expands to fill vertical space between header and footer */
+.content {
+  margin: 0 auto;
+  padding: 0 2em;
+  max-width: 800px;
+  line-height: 1.6em;
+  flex: 1 0 auto; /* allow content to grow and push footer down */
+}
+
+/* Give a little breathing room near the bottom so content doesn't butt into the footer */
+.content { margin-bottom: 50px; }
+
+/* Header */
+.header {
+  margin: 0;
+  color: #333;
+  text-align: center;
+  padding: 2.5em 2em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.header h1 {
+  margin: 0.2em 0;
+  font-size: 3em;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.header h2 {
+  font-weight: 300;
+  color: #ccc;
+  padding: 0;
+  margin-top: 0;
+}
+
+.content-subhead {
+  margin: 50px 0 20px 0;
+  font-weight: 300;
+  color: #888;
+}
+
+/* Left fixed menu */
+#menu {
+  margin-left: -320px; /* "#menu" width */
+  width: 320px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000; /* keep above content */
+  background: #191818;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Menu link styles */
+#menu a {
+  color: #999;
+  border: none;
+  padding: 0.6em 0 0.6em 0.6em;
+}
+
+#menu .pure-menu,
+#menu .pure-menu ul {
+  border: none;
+  background: transparent;
+}
+
+#menu .pure-menu ul,
+#menu .pure-menu .menu-item-divided {
+  border-top: 1px solid #333;
+}
+
+#menu .pure-menu li a:hover,
+#menu .pure-menu li a:focus {
+  background: #333;
+}
+
+#menu .pure-menu-selected {
+  background: #1f8dd6;
+}
+
+#menu .pure-menu-selected a {
+  color: #fff;
+}
+
+#menu .pure-menu-heading {
+  font-size: 110%;
+  color: #fff;
+  margin: 0;
+  text-transform: none;
+}
+
+/* Responsive menu toggle */
+.menu-link {
+  position: fixed;
+  display: block; /* show this only on small screens */
+  top: 0;
+  left: 0; /* "#menu width" */
+  background: rgba(0,0,0,0.7);
+  font-size: 10px; /* adjust to change button size */
+  z-index: 10;
+  width: 2em;
+  height: auto;
+  padding: 2.1em 1.6em;
+}
+
+.menu-link:hover,
+.menu-link:focus {
+  background: #000;
+}
+
+.menu-link span {
+  position: relative;
+  display: block;
+}
+
+.menu-link span,
+.menu-link span:before,
+.menu-link span:after {
+  background-color: #fff;
+  width: 100%;
+  height: 0.2em;
+}
+
+.menu-link span:before,
+.menu-link span:after {
+  position: absolute;
+  margin-top: -0.6em;
+  content: " ";
+}
+
+.menu-link span:after {
+  margin-top: 0.6em;
+}
+
+/* Desktop adjustments */
+@media (min-width: 48em) {
+  .header,
+  .content {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+  /* Shift the whole app over to make room for the fixed menu */
+  #layout {
+    padding-left: 320px; /* left column width "#menu" */
+    left: 0;
+  }
+
+  #menu {
+    left: 320px;
+  }
+
+  .menu-link {
+    position: fixed;
+    left: 320px;
+    display: none;
+  }
+
+  #layout.active .menu-link {
+    left: 320px;
+  }
+
+  /* Ensure footer content also clears the fixed menu on desktop */
+  .site-footer {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+}
+
+/* Small screen active state */
+@media (max-width: 48em) {
+  #layout.active {
+    position: relative;
+    left: 320px;
+  }
+}
