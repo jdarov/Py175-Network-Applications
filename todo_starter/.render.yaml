@@ -2,7 +2,7 @@ services:
   - type: web
     name: todolist
     env: python
-    rootDir: todo_starter
+    rootDir: py_175
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
