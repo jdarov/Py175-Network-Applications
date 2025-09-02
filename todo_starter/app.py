@@ -2,6 +2,7 @@ from werkzeug.exceptions import NotFound
 
 from uuid import uuid4
 from functools import wraps
+import os
 
 from flask import (
     flash,
@@ -197,4 +198,6 @@ def index():
 
 
 if __name__ == "__main__":
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(debug=False)
     app.run(debug=True, port=5003)
