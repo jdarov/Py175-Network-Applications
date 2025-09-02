@@ -32,7 +32,7 @@ MIN_TITLE_LEN = 1
 MAX_TITLE_LEN= 100
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 app.secret_key = 'secret1'
 
 def require_list(f):
