@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: todolist
+    name: Taskr
     env: python
-    rootDir: py_175
+    rootDir: Taskr
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
