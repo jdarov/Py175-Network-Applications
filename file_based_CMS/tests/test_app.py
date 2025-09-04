@@ -1,32 +1,45 @@
 import unittest
-from app import app, DATA_DIR
-from cms.utils import list_data_files
+import shutil
+import os
+from app import app
 
-class AppTest(unittest.TestCase):
+class CMSTest(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         self.client = app.test_client()
+        self.data_path = os.path.join(os.path.dirname(__file__), 'data')
+        self.file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'cms', 'data')
+        os.makedirs(self.data_path, exist_ok=True)
     
     def test_index(self):
+        self.create_document("about.md")
+        self.create_document("changes.txt")
+
         response = self.client.get("/")
+
         self.assertEqual(response.status_code, 200)
-
-        html = response.get_data(as_text=True)
-
-        expected_files = list_data_files(DATA_DIR)
-
-        for file_name in expected_files:
-            with self.subTest(file=file_name):
-                self.assertIn(file_name, html)
+        self.assertEqual(response.content_type, "text/html; charset=utf-8")
+        self.assertIn("about.md", response.get_data(as_text=True))
+        self.assertIn("changes.txt", response.get_data(as_text=True))
     
     def test_file_contents(self):
+        filename = "changes.txt"
+        self.create_document(filename)
 
-        file_names = list_data_files(DATA_DIR)
+        with open(f'{self.file_path}/{filename}', 'r') as file:
+            contents = file.read()
 
-        for files in file_names:
-            response = self.client.get(f"/files/{files}")
-            content = response.get_data(as_text=True)
-            self.assertEqual(response.status_code, 200)
+        response = self.client.get(f"/{filename}")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, "text/html; charset=utf-8")
+        self.assertIn(contents, response.get_data(as_text=True))
+    
+    def tearDown(self):
+        return shutil.rmtree(self.data_path, ignore_errors=True)
+    def create_document(self, name, content=""):
+        with open(os.path.join(self.data_path, name), 'w') as file:
+            file.write(content)
 
 if __name__ == "__main__":
     unittest.main()
